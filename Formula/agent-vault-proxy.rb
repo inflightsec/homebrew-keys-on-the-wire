@@ -13,8 +13,8 @@ class AgentVaultProxy < Formula
   # auto-bump bot (see .github/workflows/bump.yml) after each PyPI release.
   # The sdist ships the daemon's hash-pinned `requirements.lock`, so `def
   # install` pins every dependency from it — no `resource` stanzas needed.
-  url "https://files.pythonhosted.org/packages/e0/36/38bf0574338061cd1f59143fec38ac03740f5322a52a6f8ae635a7bf3145/agent_vault_proxy-0.8.0.tar.gz"
-  sha256 "cc0a01ec6dc6d955d39e60e8f08491094b46586fc2e0e35c591105d9f961202f"
+  url "https://files.pythonhosted.org/packages/08/1a/f520a4fb017c213e2990b025931bc2a4482ea1e3dc8e4cd6ea0655ad3e26/agent_vault_proxy-0.9.0.tar.gz"
+  sha256 "374773fede47a4bbb9c458456dd4d8f71cec5bcb0fc6507605de12d88c0cabc5"
   license "MIT"
 
   head "https://github.com/inflightsec/agent-vault-proxy.git", branch: "main"
