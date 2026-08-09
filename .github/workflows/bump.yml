@@ -1,5 +1,5 @@
 ---
-# Watches the upstream agent-vault-proxy PyPI package and opens a PR to bump
+# Watches the upstream keys-on-the-wire PyPI package and opens a PR to bump
 # the formula's url + sha256 when a new release lands.
 #
 # Runs on a schedule (every 6 hours) and on manual workflow_dispatch.
@@ -9,7 +9,7 @@
 
 name: bump
 
-# Auto-opens a PR when upstream agent-vault-proxy releases a new PyPI version.
+# Auto-opens a PR when upstream keys-on-the-wire releases a new PyPI version.
 # **PRs are NEVER auto-merged.** A human (the maintainer per CODEOWNERS) reviews each one.
 # This is the @redhat-cloud-services worm class defense at the tap-repo layer:
 # even with a compromised CI, an attacker cannot ship a malicious version to
@@ -40,8 +40,8 @@ jobs:
         id: current
         run: |
           set -euo pipefail
-          VER=$(grep -E '^\s*url\s+"' Formula/agent-vault-proxy.rb | head -1 \
-                | sed -E 's/.*agent_vault_proxy-([0-9.]+)\.tar\.gz.*/\1/')
+          VER=$(grep -E '^\s*url\s+"' Formula/keys-on-the-wire.rb | head -1 \
+                | sed -E 's/.*keys_on_the_wire-([0-9.]+)\.tar\.gz.*/\1/')
           echo "version=$VER" >> "$GITHUB_OUTPUT"
 
       - name: Get latest PyPI release
@@ -50,7 +50,7 @@ jobs:
           set -euo pipefail
           # Query PyPI's JSON API for the latest published version + tarball hash.
           # Endpoint returns: { "info": { "version": "X.Y.Z" }, "urls": [ { "filename": "...tar.gz", "url": "...", "digests": { "sha256": "..." } } ] }
-          PKG_JSON=$(curl -sL https://pypi.org/pypi/agent-vault-proxy/json)
+          PKG_JSON=$(curl -sL https://pypi.org/pypi/keys-on-the-wire/json)
           LATEST_VER=$(echo "$PKG_JSON" | jq -r '.info.version')
           TARBALL_URL=$(echo "$PKG_JSON" | jq -r '.urls[] | select(.filename | endswith(".tar.gz")) | .url')
           TARBALL_SHA=$(echo "$PKG_JSON" | jq -r '.urls[] | select(.filename | endswith(".tar.gz")) | .digests.sha256')
@@ -91,17 +91,17 @@ jobs:
             echo "  download says: $DOWNLOADED_SHA"
             exit 1
           fi
-          BRANCH="bump-agent-vault-proxy-$NEW_VER"
+          BRANCH="bump-keys-on-the-wire-$NEW_VER"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
-          sed -i.bak -E "s|^(\s*url\s+).*|\1\"$NEW_URL\"|" Formula/agent-vault-proxy.rb
-          sed -i.bak -E "s|^(\s*sha256\s+).*|\1\"$NEW_SHA\"|" Formula/agent-vault-proxy.rb
-          rm Formula/agent-vault-proxy.rb.bak
-          git add Formula/agent-vault-proxy.rb
-          git commit -m "agent-vault-proxy $NEW_VER"
+          sed -i.bak -E "s|^(\s*url\s+).*|\1\"$NEW_URL\"|" Formula/keys-on-the-wire.rb
+          sed -i.bak -E "s|^(\s*sha256\s+).*|\1\"$NEW_SHA\"|" Formula/keys-on-the-wire.rb
+          rm Formula/keys-on-the-wire.rb.bak
+          git add Formula/keys-on-the-wire.rb
+          git commit -m "keys-on-the-wire $NEW_VER"
           git push -u origin "$BRANCH"
           gh pr create \
-            --title "agent-vault-proxy $NEW_VER" \
+            --title "keys-on-the-wire $NEW_VER" \
             --body "Auto-bump to v$NEW_VER. SHA256 verified against PyPI tarball download. **Requires manual review per ADR-0015.**" \
             --label "automated-bump"

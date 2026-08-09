@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# End-to-end smoke for the Homebrew-installed agent-vault-proxy.
+# End-to-end smoke for the Homebrew-installed keys-on-the-wire.
 #
 # Proves the INSTALLED artifact actually brokers a credential: starts the
 # daemon with a static backend, sends a request carrying a placeholder to a
@@ -11,8 +11,8 @@
 # deterministic — suitable as a per-release CI gate.
 #
 # Usage:  smoke/run-smoke.sh
-# Env:    AVP_PREFIX  (optional) brew prefix of agent-vault-proxy;
-#                     defaults to `brew --prefix agent-vault-proxy`.
+# Env:    KOW_PREFIX  (optional) brew prefix of keys-on-the-wire;
+#                     defaults to `brew --prefix keys-on-the-wire`.
 #
 # Requires upstream.test (and, for the negative test, unbound.test) to resolve
 # to 127.0.0.1 — the CI workflow adds them to /etc/hosts; for a local run do:
@@ -25,8 +25,8 @@ PROXY_PORT=14322
 ECHO_PORT=8080
 PLACEHOLDER="test-PLACEHOLDER-01HXY1234567890ABC"
 
-AVP_PREFIX=${AVP_PREFIX:-$(brew --prefix agent-vault-proxy)}
-PY="$AVP_PREFIX/libexec/bin/python"
+KOW_PREFIX=${KOW_PREFIX:-$(brew --prefix keys-on-the-wire)}
+PY="$KOW_PREFIX/libexec/bin/python"
 [ -x "$PY" ] || { echo "FAIL: brew venv python not found at $PY"; exit 1; }
 
 WORK=$(mktemp -d)
@@ -66,7 +66,7 @@ sed -e "s|__SECRETS_PATH__|$SECRETS|" -e "s|__AUDIT_PATH__|$AUDIT|" \
 pids+=($!)
 
 # --- start the brew-installed daemon against the static config ---
-"$PY" -m agent_vault_proxy --set avp_config="$BINDINGS" > "$PROXY_LOG" 2>&1 &
+"$PY" -m kow --set avp_config="$BINDINGS" > "$PROXY_LOG" 2>&1 &
 pids+=($!)
 
 wait_port() {  # host port name
