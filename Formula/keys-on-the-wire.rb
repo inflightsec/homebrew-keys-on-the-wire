@@ -17,9 +17,9 @@ class KeysOnTheWire < Formula
   sha256 "76cf362a50a45cf4fedd4100b0e04429751b8ed388171ae89c45b5bbdd4efe07"
   license "Apache-2.0"
 
-  # Renamed from agent-vault-proxy in 1.0.0 (see tap_migrations.json at the
-  # tap root, which migrates existing `agent-vault-proxy` installs).
-  oldnames ["agent-vault-proxy"]
+  # Renamed from agent-vault-proxy in 1.0.0. Existing installs migrate via
+  # tap_migrations.json at the tap root (Homebrew derives the old name there);
+  # no formula-level oldname/oldnames, which this tap's brew doesn't provide.
 
   head "https://github.com/inflightsec/keys-on-the-wire.git", branch: "main"
 
