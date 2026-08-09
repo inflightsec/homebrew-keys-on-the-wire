@@ -42,18 +42,18 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$(brew --repository)/Library/Taps/inflightsec"
-          ln -s "$PWD" "$(brew --repository)/Library/Taps/inflightsec/homebrew-avp"
-          brew tap | grep inflightsec/avp
+          ln -s "$PWD" "$(brew --repository)/Library/Taps/inflightsec/homebrew-keys-on-the-wire"
+          brew tap | grep inflightsec/keys-on-the-wire
 
       - name: Audit formula (strict)
         run: |
           set -euo pipefail
-          brew audit --strict --formula inflightsec/avp/agent-vault-proxy
+          brew audit --strict --formula inflightsec/keys-on-the-wire/keys-on-the-wire
 
       - name: Style check
         run: |
           set -euo pipefail
-          brew style --formula inflightsec/avp/agent-vault-proxy
+          brew style --formula inflightsec/keys-on-the-wire/keys-on-the-wire
 
       - name: Verify SHA256 matches PyPI's published hash
         run: |
@@ -61,7 +61,7 @@ jobs:
           # The formula URL must point at PyPI; pull the upstream-recorded
           # SHA256 and compare against the formula's sha256.
           # This catches accidental drift between PyPI and the cask hash.
-          FORMULA_PATH=Formula/agent-vault-proxy.rb
+          FORMULA_PATH=Formula/keys-on-the-wire.rb
           FORMULA_URL=$(grep -E '^\s*url\s+"' "$FORMULA_PATH" | head -1 | sed -E 's/.*"(.*)"/\1/')
           FORMULA_SHA=$(grep -E '^\s*sha256\s+"' "$FORMULA_PATH" | head -1 | sed -E 's/.*"(.*)"/\1/')
           if [[ "$FORMULA_URL" == *PLACEHOLDER* ]] || [[ "$FORMULA_SHA" == *PLACEHOLDER* ]]; then

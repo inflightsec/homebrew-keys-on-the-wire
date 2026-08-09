@@ -1,4 +1,4 @@
-# agent-vault-proxy for Mac
+# keys-on-the-wire for Mac
 
 **Keep your AI agent's API keys out of its environment.** Two commands, runs as its own user, real keys stay in Bitwarden.
 
@@ -9,22 +9,22 @@ If the agent gets prompt-injected, or one of its npm/pip packages turns out to b
 ## Try it. 10 seconds.
 
 ```bash
-$ brew install inflightsec/avp/agent-vault-proxy
-$ sudo avp setup --static
-$ sudo avp secret add STRIPE_API_KEY
+$ brew install inflightsec/keys-on-the-wire/keys-on-the-wire
+$ sudo kow setup --static
+$ sudo kow secret add STRIPE_API_KEY
 Value:                                       # nothing echoes while you type
 ✓ added secret 'STRIPE_API_KEY'
-$ avp run claude                             # claude routed via AVP - real key never enters its env
+$ kow run claude                             # claude routed via kow; real key never enters its env
                                              # add `--sandvault` for an extra macOS sandbox layer
 ```
 
-No Bitwarden account? `--static` keeps secrets in a local YAML file owned by `_avp` at 0600. Upgrade to Bitwarden later by re-running `sudo avp setup` without `--static`.
+No Bitwarden account? `--static` keeps secrets in a local YAML file owned by `_avp` at 0600. Upgrade to Bitwarden later by re-running `sudo kow setup` without `--static`.
 
 ## Hardened install
 
-The block above is the demo. For the full setup — `avp run` as the recommended launcher, `~/.zshenv` patching as the fallback, MCP-server `env` blocks, `bindings.yaml`, `avp env` / `avp doctor`, update + remove — see [docs/INSTALL.md](docs/INSTALL.md).
+The block above is the demo. For the full setup (`kow run` as the recommended launcher, `~/.zshenv` patching as the fallback, MCP-server `env` blocks, `bindings.yaml`, `kow env` / `kow doctor`, update + remove) see [docs/INSTALL.md](docs/INSTALL.md).
 
-For maximum isolation, compose with [SandVault](https://github.com/webcoyote/sandvault): AVP brokers credentials, SandVault sandboxes the filesystem. Recipe in [docs/INSTALL.md](docs/INSTALL.md#compose-with-sandvault-for-full-isolation).
+For maximum isolation, compose with [SandVault](https://github.com/webcoyote/sandvault): keys-on-the-wire brokers credentials, SandVault sandboxes the filesystem. Recipe in [docs/INSTALL.md](docs/INSTALL.md#compose-with-sandvault-for-full-isolation).
 
 ## Docs
 

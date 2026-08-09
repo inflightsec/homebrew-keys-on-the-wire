@@ -59,22 +59,22 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$(brew --repository)/Library/Taps/inflightsec"
-          ln -s "$PWD" "$(brew --repository)/Library/Taps/inflightsec/homebrew-avp"
-          brew tap | grep inflightsec/avp
+          ln -s "$PWD" "$(brew --repository)/Library/Taps/inflightsec/homebrew-keys-on-the-wire"
+          brew tap | grep inflightsec/keys-on-the-wire
 
       - name: Install (stable, from the formula's pinned PyPI sdist)
         run: |
           set -euo pipefail
-          brew install inflightsec/avp/agent-vault-proxy
-          command -v avp
+          brew install inflightsec/keys-on-the-wire/keys-on-the-wire
+          command -v kow
 
       - name: CLI surface present
         run: |
           set -euo pipefail
           for v in env doctor setup secret run; do
-            avp "$v" --help >/dev/null
+            kow "$v" --help >/dev/null
           done
-          echo "avp subcommands ok: env doctor setup secret run"
+          echo "kow subcommands ok: env doctor setup secret run"
 
       - name: Map smoke hosts to loopback
         run: |
