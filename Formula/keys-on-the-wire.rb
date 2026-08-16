@@ -1,6 +1,6 @@
 # Homebrew formula for keys-on-the-wire (formerly agent-vault-proxy). Installs
 # the daemon from PyPI into an isolated virtualenv under the brew prefix.
-# Privileged setup (`_avp` user, install layout, CA, LaunchDaemon) is handled
+# Privileged setup (`_kow` user, install layout, CA, LaunchDaemon) is handled
 # by the `kow setup` command that ships INSIDE the package, not by this formula.
 
 class KeysOnTheWire < Formula
@@ -54,7 +54,7 @@ class KeysOnTheWire < Formula
 
   def caveats
     <<~EOS
-      One-time setup (creates _avp user, install layout, CA, LaunchDaemon):
+      One-time setup (creates _kow user, install layout, CA, LaunchDaemon):
 
         sudo kow setup
         # add `--static` for a local file backend instead of Bitwarden
@@ -62,11 +62,11 @@ class KeysOnTheWire < Formula
       Add to ~/.zshenv so all shells (including non-interactive) inherit:
 
         export HTTPS_PROXY="http://127.0.0.1:14322"
-        export NODE_EXTRA_CA_CERTS="/usr/local/etc/agent-vault-proxy/ca.pem"
-        export SSL_CERT_FILE="/usr/local/etc/agent-vault-proxy/ca.pem"
+        export NODE_EXTRA_CA_CERTS="/usr/local/etc/kow/ca.pem"
+        export SSL_CERT_FILE="/usr/local/etc/kow/ca.pem"
         export NODE_USE_ENV_PROXY=1  # Node 22.21+/24.5+ ignores HTTPS_PROXY without this
 
-      Then:  kow env  (writes ~/.config/avp/env with placeholder exports; source it)
+      Then:  kow env  (writes ~/.config/kow/env with placeholder exports; source it)
              kow doctor  (verify install)
 
       Add API keys later; your real key never enters the agent. Run the
@@ -78,8 +78,8 @@ class KeysOnTheWire < Formula
       kow". Install the skill ONCE by typing these as slash-commands in the
       Claude Code chat (NOT terminal commands):
 
-        /plugin marketplace add inflightsec/agent-vault-proxy
-        /plugin install avp@agent-vault-proxy
+        /plugin marketplace add inflightsec/keys-on-the-wire
+        /plugin install kow@keys-on-the-wire
 
       Codex or another agent? No plugin store, just run the command above.
     EOS

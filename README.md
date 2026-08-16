@@ -2,7 +2,7 @@
 
 **Keep your AI agent's API keys out of its environment.** Two commands, runs as its own user, real keys stay in Bitwarden.
 
-Your AI agent's environment holds **placeholder** strings like `sk-PLACEHOLDER-...` instead of real API keys. When the agent calls OpenAI / GitHub / Anthropic / etc., the request goes through a local proxy running as a dedicated `_avp` system user. The proxy fetches the real key from [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/) and substitutes it on the wire. The agent never sees the real bytes.
+Your AI agent's environment holds **placeholder** strings like `sk-PLACEHOLDER-...` instead of real API keys. When the agent calls OpenAI / GitHub / Anthropic / etc., the request goes through a local proxy running as a dedicated `_kow` system user. The proxy fetches the real key from [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/) and substitutes it on the wire. The agent never sees the real bytes.
 
 If the agent gets prompt-injected, or one of its npm/pip packages turns out to be malicious, the only thing that escapes is a placeholder worth nothing.
 
@@ -18,7 +18,7 @@ $ kow run claude                             # claude routed via kow; real key n
                                              # add `--sandvault` for an extra macOS sandbox layer
 ```
 
-No Bitwarden account? `--static` keeps secrets in a local YAML file owned by `_avp` at 0600. Upgrade to Bitwarden later by re-running `sudo kow setup` without `--static`.
+No Bitwarden account? `--static` keeps secrets in a local YAML file owned by `_kow` at 0600. Upgrade to Bitwarden later by re-running `sudo kow setup` without `--static`.
 
 ## Hardened install
 
