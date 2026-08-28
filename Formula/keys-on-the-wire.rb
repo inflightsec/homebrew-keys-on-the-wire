@@ -13,8 +13,8 @@ class KeysOnTheWire < Formula
   # auto-bump bot (see .github/workflows/bump.yml) after each PyPI release.
   # The sdist ships the daemon's hash-pinned `requirements.lock`, so `def
   # install` pins every dependency from it; no `resource` stanzas are needed.
-  url "https://files.pythonhosted.org/packages/ee/91/c80b82e76d766882a3780894fc7b2cf27fb7ca4f7741ac85cc73e0f8cce2/keys_on_the_wire-1.0.0.tar.gz"
-  sha256 "76cf362a50a45cf4fedd4100b0e04429751b8ed388171ae89c45b5bbdd4efe07"
+  url "https://files.pythonhosted.org/packages/4a/fb/40ffc9d245ecda866e0462d35f84f54fa7a0be6df80bd339ada2feb450d6/keys_on_the_wire-1.1.1.tar.gz"
+  sha256 "429560de8b5482aa8cf106185c73a7abdb0c5add81624380d68fa34f3499fdaf"
   license "Apache-2.0"
 
   # Renamed from agent-vault-proxy in 1.0.0. Existing installs migrate via
